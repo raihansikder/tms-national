@@ -161,22 +161,20 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
-        /*---------------------------------
-        | Section: Additional packages
-        |---------------------------------*/
+
+        /*
+         * Package Service Providers...
+         */
         //Barryvdh\Debugbar\ServiceProvider::class,
         Yajra\DataTables\DataTablesServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
-        Collective\Remote\RemoteServiceProvider::class,
-        Barryvdh\DomPDF\ServiceProvider::class,
         /*---------------------------------
         | Section: Default Application Service providers
         |---------------------------------*/
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
-        App\Providers\BroadcastServiceProvider::class,
+        // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
-        App\Providers\TelescopeServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         /*---------------------------------
         | Section: Mainframe Service providers
@@ -186,6 +184,7 @@ return [
         | Section: Project Service providers
         |---------------------------------*/
         App\Projects\Tms\Providers\AppServiceProvider::class,
+
     ],
 
     /*
@@ -240,10 +239,10 @@ return [
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
         /*------------------------------------------
-        | Section: Additional packages
-        |------------------------------------------*/
-        'SSH' => Collective\Remote\RemoteFacade::class,
-        'PDF' => Barryvdh\DomPDF\Facade::class,
+       | Section: Additional packages
+       |------------------------------------------*/
+        // 'SSH' => Collective\Remote\RemoteFacade::class,
+        // 'PDF' => Barryvdh\DomPDF\Facade::class,
         /*-------------------------------------------------------------------------
         | Section: Alias Mainframe module classes. A good place to override Mainframe class reference
         |-------------------------------------------------------------------------*/

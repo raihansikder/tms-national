@@ -16,7 +16,3 @@ use Illuminate\Http\Request;
 // Route::middleware('auth:api')->get('/user', function (Request $request) {
 //     return $request->user();
 // });
-
-// Note: This is the default Laravel api routes file. If you are working with
-//  mainframe, your project should have a separate dedicated web routes
-//  file. Use that one instead

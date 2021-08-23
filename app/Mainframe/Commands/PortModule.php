@@ -73,10 +73,10 @@ class PortModule extends Command
         // $module->route_name = 'modules';
         $module->class_directory = 'app/'.$classDir.'/Modules/'.Str::plural($class);
         $module->namespace = '\App\\'.$classPath.'\Modules\\'.Str::plural($class);
-        $module->model = '\App\\'.$classPath.'\Modules\Modules\\'.$class;
-        $module->policy = '\App\\'.$classPath.'\Modules\Modules\\'.$class.'Policy';
-        $module->processor = '\App\\'.$classPath.'\Modules\Modules\\'.$class.'Processor';
-        $module->controller = '\App\\'.$classPath.'\Modules\Modules\\'.$class.'Controller';
+        $module->model = $module->namespace.'\\'.$class;
+        $module->policy = $module->namespace.'\\'.$class.'Policy';
+        $module->processor = $module->namespace.'\\'.$class.'Processor';
+        $module->controller = $module->namespace.'\\'.$class.'Controller';
         $module->view_directory = $viewPath.'.modules.'.Str::plural($this->moduleName);
         // $module->icon_css = 'fa fa-ellipsis-v';
         // $module->is_visible = 1;

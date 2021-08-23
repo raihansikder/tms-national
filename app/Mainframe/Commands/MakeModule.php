@@ -41,9 +41,9 @@ class MakeModule extends Command
         $this->model = $this->model();
 
         $this->info($this->model.'Creating ..');
-        // $this->createMigration();
         $this->createClasses();
         $this->createViewFiles();
+        $this->createMigration();
         $this->info($this->model.'... Done');
 
     }
