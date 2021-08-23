@@ -1,0 +1,1 @@
+@extends('projects.tms.layouts.module.grid.template')
