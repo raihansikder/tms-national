@@ -137,6 +137,14 @@ function getInputAsArray(selector) {
  */
 function initGenericDeleteBtn() {
 
+    prepareDeleteModalFormInputs();
+
+    $('#deleteSubmit').click(function () {
+        $('#deleteModal').modal('hide');
+    });
+}
+
+function prepareDeleteModalFormInputs() {
     $('button[name=genericDeleteBtn]').click(function () {
         var route = $(this).attr('data-route');
         var redirect_success = $(this).attr('data-redirect_success');
@@ -146,10 +154,6 @@ function initGenericDeleteBtn() {
         $('form[name=deleteForm] input[name=redirect_success]').val(redirect_success);
         $('form[name=deleteForm] input[name=redirect_fail]').val(redirect_fail);
 
-    });
-
-    $('#deleteSubmit').click(function () {
-        $('#deleteModal').modal('hide');
     });
 }
 
