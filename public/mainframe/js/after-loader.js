@@ -74,8 +74,10 @@ initGenericDeleteBtn();
 | enable slim scroll for all HTML element with class 'slimscroll'
 |
 */
-$('.slimscroll').slimScroll({
-    alwaysVisible: true
+$('slimscroll').each((i, el) => {
+    el.slimScroll({
+        alwaysVisible: true
+    })
 });
 
 /*
@@ -136,3 +138,11 @@ initCheckbox();
 | Auto resize all text area
 |---------------------------------*/
 autosize(document.querySelectorAll('textarea'));
+
+
+/*
+|--------------------------------------------------------------------------
+| Format Json Text area
+|--------------------------------------------------------------------------
+*/
+initJsonTextarea();

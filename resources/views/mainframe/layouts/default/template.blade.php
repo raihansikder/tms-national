@@ -93,6 +93,7 @@
     </div>
     @include('mainframe.layouts.default.includes.modals.messages')
     @include('mainframe.layouts.default.includes.modals.delete')
+    @include('mainframe.layouts.default.includes.modals.confirm')
 </div>
 
 @include('mainframe.layouts.default.includes.js')

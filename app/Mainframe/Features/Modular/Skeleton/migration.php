@@ -81,7 +81,7 @@ class CreateSuperHeroesTable extends Migration
             'cache:clear',
             'route:clear',
             'mainframe:create-root-models',
-            'ide-helper:model -W'
+            // 'ide-helper:model -W'
         ];
         foreach ($commands as $command){
             $output->writeLn('php artisan '. $command);

@@ -110,7 +110,9 @@ trait DatatableTrait
 
     public function process()
     {
-        $dt = datatables($this->query());
+
+        $this->datatable();
+        $dt = $this->dt;
 
         if (count($this->whiteList)) {
             $dt->whitelist($this->whiteList);

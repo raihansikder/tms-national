@@ -16,6 +16,7 @@ class AppServiceProvider extends ServiceProvider
         \App\Mainframe\Commands\CreateRootModels::Class,
         \App\Mainframe\Commands\CleanDeletedUploads::Class,
         \App\Mainframe\Commands\FixPolymorphicType::class,
+        \App\Mainframe\Commands\FixContentKey::class,
     ];
 
     protected $providers = [

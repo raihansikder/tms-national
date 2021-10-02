@@ -647,10 +647,18 @@ a i {
     background-color: transparent;
 }
 
-.column-sort{
+.column-sort {
     font-size: 8px;
 }
 
-.sort-btn{
+.sort-btn {
     white-space: normal;
+}
+
+.partBuilderTable > tbody > tr > td, #partsBuilder > tbody > tr > th, #partsBuilder > tfoot > tr > td, #partsBuilder > tfoot > tr > th, #partsBuilder > thead > tr > td, #partsBuilder > thead > tr > th {
+    border: 0;
+}
+
+textarea.json {
+    font-family: Monospace, serif;
 }

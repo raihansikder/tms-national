@@ -43,6 +43,7 @@ function enableValidation(form_name, successHandlerFunction = false) {
 
             // Load messages in modal and show.
             loadMsg(response);
+            $('.modal').modal('hide'); // Hide all open modals
             $('#msgModal').modal('show');
 
             // Handle success. Redirect or pass to successHandlerFunction.

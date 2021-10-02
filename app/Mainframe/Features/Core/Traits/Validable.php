@@ -264,7 +264,7 @@ trait Validable
     }
 
     /**
-     * @param  \Illuminate\Validation\Validator  $validator
+     * @param  \Illuminate\Validation\Validator|\Illuminate\Contracts\Validation\Validator  $validator
      * @return $this
      */
     public function mergeValidatorErrors($validator)
@@ -273,5 +273,4 @@ trait Validable
 
         return $this;
     }
-
 }

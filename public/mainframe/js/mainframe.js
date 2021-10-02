@@ -377,3 +377,45 @@ function initJQueryDatePicker(selector, format = 'dd-mm-yy') {
     });
 }
 
+/**
+ * JS based api_token re-generator
+ * @param len
+ * @param charSet
+ * @returns {string}
+ */
+function randomString(len, charSet) {
+    charSet = charSet || 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var randomString = '';
+    for (var i = 0; i < len; i++) {
+        var randomPoz = Math.floor(Math.random() * charSet.length);
+        randomString += charSet.substring(randomPoz, randomPoz + 1);
+    }
+    return randomString;
+}
+
+/**
+ * Format a text area that contains Json data.
+ * @param css
+ */
+function initJsonTextarea(css) {
+
+    if (!css) {
+        css = 'json';
+    }
+
+    // console.log(css);
+    $('textarea.' + css).each(function (i, el) {
+        var elem = $( el );
+        $(elem).bind('change', () => {
+            var ugly = elem.val();
+            if(ugly) {
+                // console.log(elem);
+                var obj = JSON.parse(ugly);
+                var pretty = JSON.stringify(obj, undefined, 4);
+                elem.val(pretty);
+            }
+        });
+        elem.trigger('change');
+    });
+
+}

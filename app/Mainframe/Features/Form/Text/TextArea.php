@@ -15,4 +15,15 @@ class TextArea extends Input
         $this->containerClass = $this->var['container_class'] ?? $this->var['div'] ?? 'col-md-6';
         $this->editorConfig = $var['editorConfig'] ?? 'editor_config_basic';
     }
+
+    public function value()
+    {
+        $value = parent::value();
+
+        if (is_array($value)) {
+            return json_encode($value);
+        }
+
+        return $value;
+    }
 }

@@ -34,15 +34,25 @@ trait ContentTrait
     */
     public function getPartsArrayAttribute()
     {
-        $parts = json_decode($this->parts ?? '[]');
+        $parts = $this->parts ?? [];
 
         $array = [];
         foreach ($parts as $part) {
-            $array[$part->name] = $part->content;
+            $array[$part->key] = $part->value;
         }
 
         return $array;
 
+    }
+
+    public function getPartsAttribute($value)
+    {
+        if (is_array($value)) {
+            return $value;
+        }
+
+
+        return json_decode($value ?? '[]');
     }
 
     /*
@@ -61,21 +71,21 @@ trait ContentTrait
     /**
      * Get content by part
      *
-     * @param  null  $name
+     * @param  null  $key
      * @return mixed|null
      */
-    public function part($name = null)
+    public function part($key = null)
     {
-        if (!$name || $name == 'body') {
+        if (!$key || $key == 'body') {
             return $this->body;
         }
 
-        if ($name == 'title') {
+        if ($key == 'title') {
             return $this->title;
         }
 
-        if (isset($this->parts_array[$name])) {
-            return $this->parts_array[$name];
+        if (isset($this->parts_array[$key])) {
+            return $this->parts_array[$key];
         }
 
         return null;
@@ -83,6 +93,7 @@ trait ContentTrait
 
     /**
      * Get content by key
+     *
      * @param $key
      * @return Content|\Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model|object|null
      */

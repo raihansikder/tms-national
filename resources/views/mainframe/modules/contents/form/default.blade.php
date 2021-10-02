@@ -42,30 +42,14 @@ $content = $element;
         @include('form.tags',['var'=>['name'=>'tags','label'=>'Tags', 'div'=>'col-md-12']])
         {{---------------|  Form input start |-----------------------}}
 
-        <div id="partsBuilder" class="col-md-12 no-padding-l" style="clear: both">
 
-            <h4>Parts</h4>
-            <div class="clearfix"></div>
-
-            <table id="partsTable" class="table">
-                <tr v-for="(part, i) in parts" :key="i">
-                    <td style="width: 20%">
-                        <button type="button" v-on:click="removeRow(i)" class="btn btn-default remove-package"><i class="fa fa-close"></i></button>
-                        <input type="text" :name="'parts['+i+'][name]'" v-model="part.name"
-                               class="validate[required] form-control" placeholder="part-name"/>
-                    </td>
-                    <td>
-                        <textarea type="text" :name="'parts['+i+'][content]'" v-model="part.content"
-                                  class="validate[required] form-control" placeholder="content"></textarea>
-
-                    </td>
-                </tr>
-            </table>
-            <div class="clearfix"></div>
-            <button type="button" v-on:click="addRow" class="btn btn-default"><i class="fa fa-plus"></i> &nbsp;Add</button>
-
-            @include('form.hidden',['var'=>['name'=>'parts','label'=>'Parts', 'params'=>['v-model'=>'partsString'],'value'=>($element->parts ?? '[]')]])
-        </div>
+        <?php
+        $var = [
+            'name' => 'parts',
+            'label' => 'Properties',
+        ]
+        ?>
+        @include('mainframe.form.parts', compact('var'))
         @include('form.action-buttons')
         {{ Form::close() }}
     </div>
@@ -82,29 +66,4 @@ $content = $element;
 @section('js')
     @parent
     @include('mainframe.modules.contents.form.js')
-    <script>
-        // Todo: Enable CKEditor
-        // initEditor('body', {})
-
-        var PartsBuilder = new Vue({
-            el: '#partsBuilder',
-            data: {
-                parts: JSON.parse($("#parts").val())
-            },
-
-            computed: {
-                partsString: function () {
-                    return JSON.stringify(this.parts);
-                },
-            },
-            methods: {
-                addRow: function () {
-                    this.parts.push({name: 'part-name', content: 'Content'});
-                },
-                removeRow: function (index) {
-                    this.parts.splice(index, 1);
-                },
-            }
-        });
-    </script>
 @endsection

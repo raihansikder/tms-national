@@ -1,10 +1,8 @@
 <?php
 
-namespace App\Mainframe\Features\Form\Text;
+namespace App\Mainframe\Features\Form;
 
-use App\Mainframe\Features\Form\Input;
-
-class InputText extends Input
+class Parts extends Input
 {
     /**
      * Input constructor.
@@ -18,9 +16,31 @@ class InputText extends Input
 
         $this->type = $var['type'] ?? 'text'; // Can be text or password
 
-        if (! $this->isEditable) {
+        if (!$this->isEditable) {
             $this->params['readonly'] = 'readonly';
         }
+    }
+
+    /**
+     * Class of the main div
+     *
+     * @return string
+     */
+    public function containerClasses()
+    {
+        return 'col-md-12 no-padding'
+            .' '.$this->errors->first($this->name, 'has-error')
+            .' '.$this->uid;
+    }
+
+    public function vueElement()
+    {
+        return $this->var['vue_element'] ?? 'PartsBuilder';
+    }
+
+    public function type()
+    {
+        return $this->var['type'] ?? 'input';
     }
 
     public function value()
@@ -33,4 +53,5 @@ class InputText extends Input
 
         return $value;
     }
+
 }

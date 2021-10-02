@@ -119,21 +119,12 @@
         //Make the api_token readonly
         $("input[name=api_token]").attr('readonly', true);
 
-        //JS based api_token re-generator
-        function randomString(len, charSet) {
-            charSet = charSet || 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-            var randomString = '';
-            for (var i = 0; i < len; i++) {
-                var randomPoz = Math.floor(Math.random() * charSet.length);
-                randomString += charSet.substring(randomPoz, randomPoz + 1);
-            }
-            return randomString;
-        }
+
 
         $("#api_token_generate").click(function (e) {
             event.preventDefault(e);
             $("input[name=api_token]").val(randomString(64));
-            console.log(randomString(64));
+            // console.log(randomString(64));
         });
     </script>
 @endsection

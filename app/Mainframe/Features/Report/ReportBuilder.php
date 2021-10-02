@@ -75,14 +75,21 @@ class ReportBuilder extends BaseController
         parent::__construct();
         $this->transformRequest();
 
-        $this->setDataSource($dataSource);
+        $this->dataSource = $this->setDataSource($dataSource);
         $this->path = $path ?: $this->path;
         $this->cache = $cache ?: $this->cache;
     }
 
+    /**
+     * Set the table or model query as the primary data source
+     * @param \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Model|string $dataSource
+     * @return $this
+     */
     public function setDataSource($dataSource)
     {
         $this->dataSource = $dataSource ?: $this->dataSource;
+
+        // If a table name is given then set the table
         if (is_string($this->dataSource)) {
             $this->table = $this->dataSource;
         }
@@ -94,7 +101,7 @@ class ReportBuilder extends BaseController
     // public function defaultFilterEscapeFields() { }
     // public function customFilterOnEscapedFields($query, $field, $val) { }
     // public function columnOptions() { }
-    // public function ghostColumnOptions() { }
+    // public function ghostColumnOptions() { }®
     // public function defaultColumns() { }
 
     /*
