@@ -45,4 +45,5 @@ class FixContentKey extends MakeModule
 
         $this->info('... Done');
     }
+
 }

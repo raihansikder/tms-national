@@ -42,13 +42,18 @@ trait ReportTrait
      */
     public function url()
     {
-        $url =  route('home').urldecode($this->parameters);
-
-        if(!Str::contains($url,'?')){
-            $url.='?';
+        // If param is json then build the url with the array
+        if (isJson($this->parameters)) {
+            $url = route('home', json_decode($this->parameters, 1));
+        } else {
+            $url = route('home').urldecode($this->parameters);
         }
 
-        return $url.'&report_name='.urlencode($this->name);
+        if (!Str::contains($url, '?')) {
+            $url .= '?';
+        }
+
+        return $url.'&report_name='.urlencode($this->name); // add report name
     }
 
     /**
@@ -60,7 +65,7 @@ trait ReportTrait
     public static function getReportUrlFromId($id)
     {
         if ($report = Report::remember(timer('short'))->find($id)) {
-            return $report->url().'&report_name='.$report->name;
+            return $report->url();
         }
 
         return false;

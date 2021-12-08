@@ -15,6 +15,7 @@ use Str;
 /** @mixin User $this */
 trait UserTrait
 {
+    protected $allowedPermissionsValues = [-1, 0, 1];
     /*
     |--------------------------------------------------------------------------
     | Query scopes + Dynamic scopes
@@ -37,7 +38,8 @@ trait UserTrait
             return $upload->url;
         }
 
-        return null;
+        return asset('mainframe/images/user.png');
+
     }
 
     public function getGroupAttribute()

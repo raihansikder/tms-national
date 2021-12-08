@@ -50,7 +50,6 @@ class SuperHeroController extends ModularController
     }
 
     // public function report() { }
-    // public function transformInputRequests() { }
     // public function storeRequestValidator() { }
     // public function updateRequestValidator() { }
     // public function saveRequestValidator() { }

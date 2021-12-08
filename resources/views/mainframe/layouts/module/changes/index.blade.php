@@ -18,7 +18,7 @@
             <?php
             /** @var \OwenIt\Auditing\Models\Audit $audit */
             $user = \App\User::remember(timer('long'))->find($audit->user_id);
-            $email = $user ? $user->email : '-';
+            $email = $user->email ?? '-';
             ?>
             <tr>
                 <td>

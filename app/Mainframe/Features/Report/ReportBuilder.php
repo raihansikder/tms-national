@@ -12,7 +12,7 @@ use Illuminate\Database\Query\Builder;
 class ReportBuilder extends BaseController
 {
 
-    use Output, Query, Filterable, Columns;
+    use Filterable, Columns, Query, Output;
 
     /** @var  \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Model DB Table/View names */
     public $dataSource;
@@ -29,20 +29,19 @@ class ReportBuilder extends BaseController
     /** @var  Builder */
     public $query;
 
-    /** @var  \Illuminate\Support\Collection Report result */
+    /** @var  \Illuminate\Support\Collection */
     public $result;
 
-    /**
-     * Default rows per page
-     *
-     * @var
-     */
+    /** @var integer */
+    public $total;
+
+    /** @var integer Default rows per page */
     public $rowsPerPage;
 
-    /** @var array */
+    /** @var array sting search with %*** % */
     public $fullTextFields = ['name', 'name_ext'];
 
-    /** @var array */
+    /** @var array Fields to search */
     public $searchFields = ['name', 'name_ext'];
 
     /** @var string */
@@ -73,28 +72,11 @@ class ReportBuilder extends BaseController
     public function __construct($dataSource = null, $path = null, $cache = null)
     {
         parent::__construct();
-        $this->transformRequest();
 
-        $this->dataSource = $this->setDataSource($dataSource);
+        $this->transformRequest();
+        $this->setDataSource($dataSource);
         $this->path = $path ?: $this->path;
         $this->cache = $cache ?: $this->cache;
-    }
-
-    /**
-     * Set the table or model query as the primary data source
-     * @param \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Model|string $dataSource
-     * @return $this
-     */
-    public function setDataSource($dataSource)
-    {
-        $this->dataSource = $dataSource ?: $this->dataSource;
-
-        // If a table name is given then set the table
-        if (is_string($this->dataSource)) {
-            $this->table = $this->dataSource;
-        }
-
-        return $this;
     }
 
     // public function queryDataSource() { }

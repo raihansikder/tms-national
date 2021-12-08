@@ -45,15 +45,30 @@ class SelectAjax extends SelectModel
         return $this->preload;
     }
 
+    /**
+     * Determine the URL to get the json list
+     *
+     * @return string|null
+     */
     public function url()
     {
+        if ($this->url) {
+            return $this->url;
+        }
+
         if ($this->table) {
             $moduleName = Module::fromTable($this->table)->name;
 
             return route("{$moduleName}.list-json")."?columns_csv={$this->valueField},".$this->nameField;
         }
 
-        return $this->url;
+        if ($this->model) {
+            $moduleName = $this->model->module()->name;
+
+            return route("{$moduleName}.list-json")."?columns_csv={$this->valueField},".$this->nameField;
+        }
+
+        return null;
     }
 
 }

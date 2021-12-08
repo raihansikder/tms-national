@@ -161,9 +161,15 @@ function toArray($input)
     return $input ? [$input] : null;
 }
 
-function isJson($input)
+/**
+ * Check if the value is json
+ *
+ * @param  string  $value
+ * @return bool
+ */
+function isJson($value)
 {
-    return is_string($input) && is_array(json_decode($input, true)) && (json_last_error() == JSON_ERROR_NONE);
+    return is_string($value) && is_array(json_decode($value, true)) && (json_last_error() == JSON_ERROR_NONE);
 }
 
 /**
@@ -351,6 +357,7 @@ function isCsv($input)
 
 /**
  * remove special characters from string
+ *
  * @param $string
  * @return mixed
  */

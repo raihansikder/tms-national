@@ -16,11 +16,16 @@ class TextArea extends Input
         $this->editorConfig = $var['editorConfig'] ?? 'editor_config_basic';
     }
 
+    /**
+     * Text area value. Make everything string to show
+     *
+     * @return array|false|\Illuminate\Http\Request|string|null
+     */
     public function value()
     {
         $value = parent::value();
 
-        if (is_array($value)) {
+        if (is_array($value) || is_object($value)) {
             return json_encode($value);
         }
 

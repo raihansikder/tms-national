@@ -22,13 +22,13 @@ trait ModuleReportBuilderTrait
     }
 
     /**
-     * @param $module
+     * @param Module|string $module
      * @return ModuleReportBuilderTrait
      */
     public function setModule($module)
     {
         if (is_string($module)) {
-            $module = Module::byName('invoices');
+            $module = Module::byName($module);
         }
 
         $this->module = $module;

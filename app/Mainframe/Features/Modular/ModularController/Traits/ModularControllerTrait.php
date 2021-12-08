@@ -8,11 +8,38 @@ use App\Mainframe\Features\Report\ModuleList;
 use App\Mainframe\Features\Report\ModuleReportBuilder;
 use App\Mainframe\Modules\Comments\CommentController;
 use App\Mainframe\Modules\Uploads\UploadController;
+use App\Module;
 use Illuminate\Http\Request;
 
 /** @mixin ModularController */
 trait ModularControllerTrait
 {
+    /**
+     * Initialize modular controller
+     */
+    public function initModularController()
+    {
+        // Load
+        $this->module = Module::byName($this->moduleName);
+        $this->model = $this->module->modelInstance();
+        $this->view = $this->viewProcessor()->setModule($this->module)->setModel($this->model);
+
+        // Sometimes the wet element is shared back as payload on validation fail on store/update etc.
+        // We can use that wet model instead of relying on request()->old();
+        $payload = session('payload');
+        if ($payload instanceof $this->model) {
+            $this->element = $payload;
+        }
+
+        // Share these variables in  all views
+        \View::share([
+            'module' => $this->module,
+            'model' => $this->model,
+            'view' => $this->view,
+        ]);
+
+    }
+
     /**
      * Index/List
      *
@@ -67,7 +94,8 @@ trait ModularControllerTrait
     public function create()
     {
         $uuid = request()->old('uuid') ?: uuid();
-        $this->element = $this->model->fill(request()->all());
+        $this->element = $this->element ?: $this->model->fill(request()->all());
+
         $this->element->uuid = $uuid;
         $this->element->is_active = 1; // Note: Set to active by default while creating
 
@@ -90,7 +118,9 @@ trait ModularControllerTrait
      */
     public function edit($id)
     {
-        if (!$this->element = $this->model->find($id)) {
+        $this->element = $this->element ?: $this->model->find($id);
+
+        if (!$this->element) {
             return $this->notFound();
         }
 
@@ -122,6 +152,7 @@ trait ModularControllerTrait
 
         $this->element = $this->model; // Create an empty model to be stored.
 
+        // $this->attemptStore();
         try {
             $this->attemptStore();
         } catch (\Exception $e) {

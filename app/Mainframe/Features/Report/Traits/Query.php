@@ -2,6 +2,7 @@
 
 namespace App\Mainframe\Features\Report\Traits;
 
+use App\Mainframe\Features\Report\ReportBuilder;
 use App\Mainframe\Helpers\Convert;
 use App\Mainframe\Helpers\Mf;
 use Cache;
@@ -12,7 +13,24 @@ use Illuminate\Database\Query\Builder;
 /** @mixin \App\Mainframe\Features\Report\ReportBuilder $this */
 trait Query
 {
-    public $total;
+
+    /**
+     * Set the table or model query as the primary data source
+     *
+     * @param  \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Model|string  $dataSource
+     * @return $this
+     */
+    public function setDataSource($dataSource)
+    {
+        $this->dataSource = $dataSource ?: $this->dataSource;
+
+        // If a table name is given then set the table
+        if (is_string($this->dataSource)) {
+            $this->table = $this->dataSource;
+        }
+
+        return $this;
+    }
 
     /**
      * Build query to get the data.
@@ -62,7 +80,9 @@ trait Query
      */
     public function result()
     {
-        return $this->resultQuery()->paginate($this->rowsPerPage());
+        $this->result = $this->result ?: $this->resultQuery()->paginate($this->rowsPerPage());
+
+        return $this->result;
         // try {
         //     if ($this->result) {
         //         return $this->result;
@@ -270,7 +290,7 @@ trait Query
      */
     public function defaultSelectedColumns()
     {
-        return [];
+        return $this->defaultColumns();
     }
 
     /**

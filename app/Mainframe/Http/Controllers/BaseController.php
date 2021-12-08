@@ -7,6 +7,7 @@ use App\Mainframe\Features\Core\Traits\SendResponse;
 use App\Mainframe\Features\Core\Traits\Validable;
 use App\Mainframe\Features\Core\ViewProcessor;
 use App\Mainframe\Features\Modular\BaseModule\BaseModule;
+use App\Module;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\MessageBag;
 use View;
@@ -24,9 +25,13 @@ class BaseController extends Controller
     /** @var \App\Mainframe\Features\Modular\BaseModule\BaseModuleViewProcessor */
     protected $view;
 
-    /**
-     * @var Model
-     */
+    /** @var string */
+    protected $moduleName;
+
+    /** @var Module */
+    protected $module;
+
+    /** @var \Illuminate\Database\Eloquent\Builder */
     protected $model;
 
     /** @var \App\Mainframe\Features\Modular\BaseModule\BaseModule */
@@ -47,10 +52,15 @@ class BaseController extends Controller
         $this->view = new ViewProcessor();
         $this->tenant = $this->user->tenant; // For multi-tenancy
 
+        // Sometimes the wet element is shared back as payload on validation fail on store/update etc.
+        // We can use that wet model instead of relying on request()->old();
+        $payload = session('payload');
+
         View::share([
             'user' => $this->user,
             'view' => $this->view,
             'tenant' => $this->tenant,
+            'payload' => $payload,
         ]);
     }
 

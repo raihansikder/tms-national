@@ -5,6 +5,7 @@ namespace App\Mainframe\Http\Controllers\Auth;
 use Illuminate\Http\Request;
 use App\Mainframe\Http\Controllers\BaseController;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
+use Illuminate\Validation\Rule;
 
 class ForgotPasswordController extends BaseController
 {
@@ -32,6 +33,26 @@ class ForgotPasswordController extends BaseController
     public function showLinkRequestForm()
     {
         return view($this->form);
+    }
+
+    /**
+     * Validate the email for the given request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return void
+     */
+    protected function validateEmail(Request $request)
+    {
+        $request->validate([
+            'email' => [
+                'required',
+                'email',
+                Rule::exists('users')->where(function ($query) use ($request) {
+                    // Check if the user is inactive
+                    $query->where('is_active', 1)->where('email',$request->get('email'));
+                }),
+            ],
+        ]);
     }
 
     /**

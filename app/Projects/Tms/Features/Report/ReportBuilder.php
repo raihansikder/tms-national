@@ -13,101 +13,55 @@ class ReportBuilder extends BaseController
 {
     use Filterable, Columns, Query, Output;
 
-    /*
-    |--------------------------------------------------------------------------
-    | Data Source
-    |--------------------------------------------------------------------------
-    |
-    | Source of data. This can be a string that represents a table or SQL view
-    | Or, this can be a model name.
-    |
-    */
     /** @var  \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Model DB Table/View names */
     public $dataSource;
 
-    /*
-    |--------------------------------------------------------------------------
-    | Base Directory for view/blade
-    |--------------------------------------------------------------------------
-    |
-    | All view files of a report is stored under a single directory.
-    |
-    */
-    /** @var  string Directory location of the report blade templates */
-    public $path = 'projects.tms.layouts.report';
+    /** @var string */
+    public $table;
 
-    /*
-    |--------------------------------------------------------------------------
-    | Query cache time
-    |--------------------------------------------------------------------------
-    |
-    | How long the report result is cached
-    |
-    */
+    /** @var  string Directory location of the report blade templates */
+    public $path = 'projects.tms-national.layouts.report';
+
     /** @var int Cache time */
     public $cache = 1;
 
-    /*
-    |--------------------------------------------------------------------------
-    | Query for getting report result
-    |--------------------------------------------------------------------------
-    |
-    | How long the report result is cached
-    |
-    */
     /** @var  Builder */
     public $query;
 
-    /*
-    |--------------------------------------------------------------------------
-    | results
-    |--------------------------------------------------------------------------
-    |
-    | How long the report result is cached
-    |
-    */
-    /** @var  \Illuminate\Support\Collection Report result */
+    /** @var  \Illuminate\Support\Collection */
     public $result;
 
-    /*
-    |--------------------------------------------------------------------------
-    | full text fields
-    |--------------------------------------------------------------------------
-    |
-    | Uses SQL Like % %
-    |
-    */
+    /** @var integer */
+    public $total;
+
+    /**
+     * Default rows per page
+     *
+     * @var
+     */
+    public $rowsPerPage;
+
     /** @var array */
     public $fullTextFields = ['name', 'name_ext'];
 
-    /*
-    |--------------------------------------------------------------------------
-    | Common key based search fields
-    |--------------------------------------------------------------------------
-    |
-    | Uses SQL Like % %
-    |
-    */
     /** @var array */
     public $searchFields = ['name', 'name_ext'];
 
-    /*
-    |--------------------------------------------------------------------------
-    | Output file name
-    |--------------------------------------------------------------------------
-    |
-    | How long the report result is cached
-    |
-    */
     /** @var string */
-    public $fileName;
+    public $downloadFileName;
 
-    /*
-    |--------------------------------------------------------------------------
-    | User executing the report
-    |--------------------------------------------------------------------------
-    |
-    */
+    /** @var string */
+    public $filterPath;
+
+    /** @var string */
+    public $initFunctionsPath;
+
+    /** @var \App\Module */
+    public $module;
+
+    /** @var \App\Mainframe\Features\Modular\BaseModule\BaseModule */
+    public $model;
+
     /** @var \App\User */
     public $user;
 
@@ -121,9 +75,9 @@ class ReportBuilder extends BaseController
     public function __construct($dataSource = null, $path = null, $cache = null)
     {
         parent::__construct();
-        $this->transformRequest();
 
-        $this->dataSource = $dataSource ?: $this->dataSource;
+        $this->transformRequest();
+        $this->setDataSource($dataSource);
         $this->path = $path ?: $this->path;
         $this->cache = $cache ?: $this->cache;
     }

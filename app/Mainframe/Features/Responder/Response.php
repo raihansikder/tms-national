@@ -407,8 +407,9 @@ class Response
      * @param  int  $code
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|\Illuminate\View\View|void
      */
-    public function failed($message = null, $code = null)
+    public function failed($message = null, $code = self::HTTP_UNPROCESSABLE_ENTITY)
     {
+        $message = $message ?: 'The action was not successful';
         $this->fail($message, $code);
 
         // Higher precedence than view,redirect
@@ -651,7 +652,7 @@ class Response
      */
     public function defaultViewVars()
     {
-        return [
+        $response = [
             'response' => [
                 // Load from session so that when redirected the values are retained
                 'status' => session('response.status') ?? $this->status,
@@ -659,5 +660,10 @@ class Response
                 'messageBag' => session('response.messageBag') ?? $this->messageBag,
             ],
         ];
+        if ($this->payload) {
+            $response['payload'] = session('payload') ?? $this->payload;
+        }
+
+        return $response;
     }
 }

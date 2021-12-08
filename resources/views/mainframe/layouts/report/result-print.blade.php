@@ -48,7 +48,6 @@
                     @endforeach
                     </tbody>
                 </table>
-                {{ $result->setPath(URL::full())->links() ?? '' }}
             @endif
         </div>
     @endif

@@ -34,6 +34,15 @@ trait ReportViewProcessorTrait
         return $this->user->can('create', Report::class);
     }
 
+    /**
+     * Check if report has result
+     * @return \Illuminate\Support\Collection
+     */
+    public function hasResult()
+    {
+        return $this->report->result;
+    }
+
     /*
     |--------------------------------------------------------------------------
     | Proxy function
